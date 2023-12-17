@@ -4,8 +4,8 @@ export const userSlice = createSlice({
   name: "admin",
   initialState: {
     // user exist or not
-    userInfo: localStorage.getItem("admin")
-      ? JSON.parse(localStorage.getItem("admin"))
+    userInfo: localStorage.getItem("user")
+      ? JSON.parse(localStorage.getItem("user"))
       : null,
   },
   reducers: {

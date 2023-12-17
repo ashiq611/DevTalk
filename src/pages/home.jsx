@@ -1,14 +1,15 @@
 
 
 import Layout from "../components/Layout";
-import CreateBlog from "./admin/CreateBlog";
+import Blog from "./Blog";
+
 
 
 
 const home = () => {
     return (
       <Layout>
-       
+       <Blog/>
       </Layout>
     );
 };
