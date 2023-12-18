@@ -34,6 +34,7 @@ const BlogCard = ({blog}) => {
           </div>
         </div>
       </div> */}
+
       <div className="max-w-md mx-auto bg-white rounded-md overflow-hidden shadow-md my-4">
         <img
           src={blog.thumbnail}
@@ -42,6 +43,13 @@ const BlogCard = ({blog}) => {
         />
 
         <div className="p-4">
+          <div className="avatar flex justify-between items-center p-4">
+            <div className="w-12 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+              <img src={blog.authorProfile} />
+            </div>
+            <h2>{blog.authorName}</h2>
+            <p>{blog.date}</p>
+          </div>
           <h2 className="text-xl font-semibold mb-2">{blog.title}</h2>
           <p className="text-gray-600">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do

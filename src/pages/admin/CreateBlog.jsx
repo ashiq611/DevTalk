@@ -48,6 +48,8 @@ const CreateBlog = () => {
             category: blogs.category,
             content: blogs.content,
             author: user.uid,
+            authorName: user.displayName,
+            authorProfile: user.photoURL,
             thumbnail: url,
             date: new Date().toLocaleString("en-US", {
               month: "short",

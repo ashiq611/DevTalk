@@ -21,12 +21,12 @@ const Blog = () => {
         });
         setAllBlogs(blogs);
       });
-    }, [user.uid]);
-    console.log(AllBlogs);
+    }, []);
+    // console.log(AllBlogs);
     return (
         <div className="flex justify-around">
            {
-            AllBlogs.map((blog) => (
+            AllBlogs?.map((blog) => (
                <BlogCard key={blog.id} blog={blog}/>
             ))
            }
