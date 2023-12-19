@@ -1,6 +1,21 @@
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { userLoginInfo } from "../slices/userSlice";
 
 
 const Nav = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const data = useSelector((state) => state.userLoginInfo.userInfo);
+
+    const logOutHandle = () => {
+      localStorage.removeItem("user");
+      dispatch(userLoginInfo(null));
+
+      navigate("/login");
+      // toast.warn("Logged out Successfully");
+    };
+
   return (
     <div>
       <div className="navbar bg-base-100">
@@ -45,7 +60,7 @@ const Nav = () => {
               </li>
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">daisyUI</a>
+          <Link to='/' className="btn btn-ghost text-xl">DevTalk</Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
@@ -88,39 +103,42 @@ const Nav = () => {
               />
             </svg>
           </button>
-          <a className="btn">Button</a>
+          {!data && (
+            <Link to="/login" className="btn">
+              Login
+            </Link>
+          )}
         </div>
-        <div className="dropdown dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar"
-          >
-            <div className="w-10 rounded-full">
-              <img
-                alt="Tailwind CSS Navbar component"
-                src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-              />
+        {data && (
+          <div className="dropdown dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar"
+            >
+              <div className="w-10 rounded-full">
+                <img alt="Tailwind CSS Navbar component" src={data?.photoURL} />
+              </div>
             </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+            >
+              <li>
+                <Link to='/profile' className="justify-between">
+                  Profile
+                  <span className="badge">New</span>
+                </Link>
+              </li>
+              <li>
+                <a>Settings</a>
+              </li>
+              <li>
+                <button onClick={logOutHandle}>Logout</button>
+              </li>
+            </ul>
           </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-          >
-            <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
-            </li>
-            <li>
-              <a>Settings</a>
-            </li>
-            <li>
-              <a>Logout</a>
-            </li>
-          </ul>
-        </div>
+        )}
       </div>
     </div>
   );

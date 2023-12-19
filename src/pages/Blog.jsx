@@ -24,13 +24,11 @@ const Blog = () => {
     }, []);
     // console.log(AllBlogs);
     return (
-        <div className="flex justify-around">
-           {
-            AllBlogs?.map((blog) => (
-               <BlogCard key={blog.id} blog={blog}/>
-            ))
-           }
-        </div>
+      <div className=" min-h-screen py-5 lg:py-10 flex gap-10 flex-wrap items-center justify-center">
+        {AllBlogs?.map((blog) => (
+          <BlogCard key={blog.id} blog={blog} />
+        ))}
+      </div>
     );
 };
 

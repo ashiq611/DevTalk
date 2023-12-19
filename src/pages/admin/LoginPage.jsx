@@ -20,7 +20,7 @@ const LoginPage = () => {
   // private page
   useEffect(() => {
     if (data) {
-      navigate("/home");
+      navigate("/");
     }
   });
 
@@ -104,7 +104,6 @@ const LoginPage = () => {
   // form submit shandle ends
 
   
-
   
 
 
@@ -159,14 +158,20 @@ const LoginPage = () => {
                 </p>
                 <div className="md:flex md:justify-between">
                   <label className="label">
-                    <Link to='/forgotpassword' className="label-text-alt link link-hover">
+                    <Link
+                      to="/forgotpassword"
+                      className="label-text-alt link link-hover"
+                    >
                       Forgot password?
                     </Link>
                   </label>
                   <label className="label">
                     <p className="label-text-alt">
                       Don’t have an account ?
-                      <Link to='/registration' className="label-text-alt link link-hover">
+                      <Link
+                        to="/registration"
+                        className="label-text-alt link link-hover"
+                      >
                         Sign up
                       </Link>
                     </p>
@@ -174,7 +179,9 @@ const LoginPage = () => {
                 </div>
               </div>
               <div className="form-control mt-6">
-                <button className="btn btn-primary">Login</button>
+                <button className="btn btn-primary">
+                  Login
+                </button>
               </div>
             </form>
           </div>

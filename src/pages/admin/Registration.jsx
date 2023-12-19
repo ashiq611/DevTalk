@@ -23,7 +23,7 @@ const Registration = () => {
   // private page
   useEffect(() => {
     if (data) {
-      navigate("/home");
+      navigate("/");
     }
   });
 

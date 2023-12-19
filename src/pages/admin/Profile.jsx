@@ -4,10 +4,18 @@ import { fireDB } from "../../firebase.confiq";
 
 import {ref, onValue, remove } from "firebase/database";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [Allblogs, setAllBlogs] = useState([]);
   const user = useSelector((state) => state.userLoginInfo.userInfo);
+    const navigate = useNavigate();
+
+   useEffect(() => {
+     if (!user) {
+       navigate("/");
+     }
+   });
 
   useEffect(() => {
     const blogRef = ref(fireDB, "blogs");
