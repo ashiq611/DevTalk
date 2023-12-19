@@ -41,14 +41,14 @@ const BlogInfo = () => {
       setComment('')
     };
 
-//  console.log(AllComment);
+ console.log(AllComment);
      useEffect(() => {
-       const commentRef = ref(fireDB, "comment/");
+       const commentRef = ref(fireDB, "comment");
        onValue(commentRef, (snapshot) => {
          let comments = [];
 
          snapshot.forEach((c) => {
-           if (id.id !== c.id) {
+           if (id.id == c.val().authorID) {
              comments.push({
                ...c.val(),
                id: c.key,
@@ -66,49 +66,7 @@ const BlogInfo = () => {
 
 
     return (
-      // <div>
-      //   {AllBlogs.map((b, index) => (
-      //     <div key={index} className="card w-96 bg-base-100 shadow-xl">
-      //       <figure>
-      //         <img src={b.thumbnail} alt="Shoes" />
-      //       </figure>
-      //       <div className="card-body">
-      //         <h2 className="card-title">
-      //           {b.title}
-      //           <div className="badge badge-secondary">NEW</div>
-      //         </h2>
-      //         <p>If a dog chews shoes whose shoes does he choose?</p>
-      //         <div className="card-actions justify-end">
-      //           <div className="badge badge-outline">Fashion</div>
-      //           <div className="badge badge-outline">Products</div>
-      //         </div>
-      //       </div>
-      //       <div>
-      //         <input
-      //           type="text"
-      //           placeholder="Type here"
-      //           className="input input-bordered input-info w-full max-w-xs"
-      //           onChange={(e) => setName(e.target.value)}
-      //           value={name}
-      //         />
-      //         <textarea
-      //           className="textarea textarea-info"
-      //           placeholder="Bio"
-      //           onChange={(e) => setComment(e.target.value)}
-      //           value={comment}
-      //         ></textarea>
-      //         <button onClick={() => handleComment(b)}>comment</button>
-      //       </div>
-      //     </div>
-      //   ))}
-      //   <div>{AllComment.map((c) => (
-      //     <div key={c.id}>
-      //       <h2>{c.name}</h2>
-      //       <p>{c.comment}</p>
-      //     </div>
-      //   )
-      //   )}</div>
-      // </div>
+     
       <>
         <Nav />
         <div className="max-w-md mx-auto bg-gray-800 text-white rounded-md overflow-hidden shadow-lg p-4">
@@ -148,10 +106,6 @@ const BlogInfo = () => {
               </div>
 
               {/* Content Box */}
-              {/* <p className="mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p> */}
 
               <div
                 dangerouslySetInnerHTML={createMarkup(AllBlogs.content)}
