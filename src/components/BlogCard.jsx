@@ -8,6 +8,12 @@ const BlogCard = ({blog}) => {
   const handleLoveClick = () => {
     setIsLoved(!isLoved);
   };
+
+  const [isLiked, setIsLiked] = useState(false);
+
+  const handleLike = () => {
+    setIsLiked(!isLiked);
+  };
   // Create markup function
   function createMarkup(c) {
     return { __html: c };
@@ -15,26 +21,6 @@ const BlogCard = ({blog}) => {
 
   return (
     <div>
-      {/* <div className="card lg:card-side bg-base-100 shadow-xl">
-        <figure>
-          <img
-            src={blog.thumbnail}
-            alt="Album"
-          />
-        </figure>
-        <div className="card-body">
-          <h2 className="card-title">{blog.title}</h2>
-          
-          <div
-            dangerouslySetInnerHTML={createMarkup(blog.content)}
-            className="mt-4 [&> h1]:text-[32px] [&>h1]:font-bold [&>h1]:mb-2.5 [&> h2]:text-[24px] [&>h2]:font-bold [&>h2]:mb-2.5"
-          ></div>
-          <div className="card-actions justify-end">
-            <button className="btn btn-primary">Listen</button>
-          </div>
-        </div>
-      </div> */}
-
       <div className="max-w-md mx-auto bg-white rounded-md overflow-hidden shadow-md my-4">
         <img
           src={blog.thumbnail}
@@ -83,6 +69,40 @@ const BlogCard = ({blog}) => {
           >
             Read More
           </Link>
+        </div>
+      </div>
+
+      <div className="max-w-md mx-auto bg-white rounded-md overflow-hidden shadow-lg">
+        <img
+          className="w-full h-48 object-cover"
+          src={blog.thumbnail}
+          alt="Blog Cover"
+        />
+        <div className="p-6">
+          <div className="flex items-center mb-4">
+            <img
+              className="w-10 h-10 rounded-full mr-4"
+              src={blog.authorProfile}
+              alt="Author Avatar"
+            />
+            <div>
+              <p className="text-gray-600 text-sm">By {blog.authorName}</p>
+              <p className="font-semibold text-lg">{blog.title}</p>
+            </div>
+          </div>
+          <p className="text-gray-700 text-base">{blog.content}</p>
+        </div>
+        <div className="p-6 flex justify-between items-center">
+          <button
+            className={`text-gray-600 ${isLiked ? "text-red-500" : ""}`}
+            onClick={handleLike}
+          >
+            love
+          </button>
+          <button className="bg-blue-500 text-white px-4 py-2 rounded">
+            See more
+          </button>
+       
         </div>
       </div>
     </div>
