@@ -4,7 +4,8 @@ import { fireDB } from "../../firebase.confiq";
 
 import {ref, onValue, remove } from "firebase/database";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import Nav from "../../components/Nav";
 
 const Profile = () => {
   const [Allblogs, setAllBlogs] = useState([]);
@@ -39,8 +40,28 @@ const Profile = () => {
 
   return (
     <div>
+      <Nav/>
+      <div>
+        <div className="container mx-auto p-8">
+          <div className="max-w-md mx-auto bg-indigo-500 text-center rounded-lg shadow-md overflow-hidden">
+            <div className="p-4">
+              <img
+                src={user.photoURL} // Replace with your profile photo URL
+                alt="Profile"
+                className="w-24 h-24 rounded-full mx-auto mb-4"
+              />
+              <h2 className="text-xl font-semibold text-white text-center mb-2">
+                {user.displayName}
+              </h2>
+              <Link to='/createblog' className="bg-blue-500 text-white px-4 py-2 rounded-full mx-auto">
+                Create Blog
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="w-full p-4">
-        <div className="text-3xl font-semibold mb-4">Product List</div>
+        <div className="text-3xl font-semibold mb-4">Blog List</div>
 
         <table className="w-full border-collapse">
           <thead>
@@ -72,7 +93,10 @@ const Profile = () => {
                     <button className="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none">
                       Edit
                     </button>
-                    <button onClick={() => handleBlogRemove(blog)} className="p-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none ml-2">
+                    <button
+                      onClick={() => handleBlogRemove(blog)}
+                      className="p-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none ml-2"
+                    >
                       Remove
                     </button>
                   </>
