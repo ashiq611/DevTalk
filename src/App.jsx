@@ -12,6 +12,7 @@ import { Toaster } from "react-hot-toast";
 import CreateBlog from "./pages/admin/CreateBlog";
 import LoginPage from "./pages/admin/LoginPage";
 import Registration from "./pages/admin/Registration";
+import About from "./pages/About";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/allblogs" element={<AllBlogs />} />
           <Route path="/bloginfo/:id" element={<BlogInfo />} />

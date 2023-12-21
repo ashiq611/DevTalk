@@ -1,19 +1,21 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { BiLike } from "react-icons/bi";
+import { FcLike } from "react-icons/fc";
 
 
 const BlogCard = ({blog}) => {
-  const [isLoved, setIsLoved] = useState(false);
 
-  const handleLoveClick = () => {
-    setIsLoved(!isLoved);
-  };
+ const handleLike = () => {
+   // Implement your logic for handling the "Like" button click
+   console.log("Liked!");
+ };
 
-  const [isLiked, setIsLiked] = useState(false);
-
-  const handleLike = () => {
-    setIsLiked(!isLiked);
-  };
+ const handleFavorite = () => {
+   // Implement your logic for handling the "Favorite" button click
+   console.log("Favorited!");
+ };
+  
   // Create markup function
   function createMarkup(c) {
     return { __html: c };
@@ -21,63 +23,54 @@ const BlogCard = ({blog}) => {
 
   return (
     <div>
-      <div className="max-w-md mx-auto bg-gray-800 text-white rounded-md overflow-hidden shadow-lg">
-        {/* Image with shadow */}
-        <div className="relative">
+      <div className="w-full mx-auto mt-8 p-4 bg-gray-800 text-white shadow-md rounded-md">
+        <img
+          src={blog.thumbnail}
+          alt="Blog Cover"
+          className="w-full h-48 object-fill mb-4 rounded-md"
+        />
+        <h1 className="text-3xl font-bold mb-4">{blog.title}</h1>
+        <div className="flex flex-col sm:flex-row items-center mb-4">
           <img
-            className="w-min h-48 object-cover object-center rounded-t-md"
-            src={blog.thumbnail}
-            alt="Blog Post"
+            src={blog.authorProfile}
+            alt={blog.authorName}
+            className="w-10 h-10 rounded-full mb-2 sm:mb-0 sm:mr-2"
           />
-          <div className="absolute inset-0 bg-black opacity-50 rounded-t-md"></div>
-        </div>
-
-        <div className="p-6">
-          {/* Category */}
-          <span className="text-blue-500 font-bold uppercase text-sm">
-            {blog.category}
-          </span>
-
-          {/* Title */}
-          <h2 className="mt-2 text-xl font-semibold">{blog.title}</h2>
-
-          <div className="flex items-center mt-4">
-            {/* Author Photo */}
-            <img
-              className="w-8 h-8 rounded-full mr-2"
-              src={blog.authorProfile}
-              alt="Author"
-            />
-
-            {/* Author Name and Date */}
-            <div>
-              <p className="text-sm font-medium">{blog.authorName}</p>
-              <p className="text-sm">{blog.date}</p>
-            </div>
+          <div>
+            <p className="text-gray-300 font-semibold">{blog.authorName}</p>
+            <p className="text-gray-500">{blog.date}</p>
           </div>
-
-          {/* Content Box */}
-          {/* <p className="mt-4">
-           {blog.content}
-          </p> */}
-
+        </div>
+        <div className="text-gray-300">
           <div
             dangerouslySetInnerHTML={createMarkup(blog.content)}
             className="prose text-white mt-4"
           ></div>
-
-          {/* Read More Button */}
+        </div>
+        <div className="flex flex-wrap mt-4">
+          <div className="badge badge-primary">{blog.category}</div>
+        </div>
+        <div className="flex flex-col sm:flex-row justify-between items-center mt-4">
+          <div className="flex mb-2 sm:mb-0">
+            <button
+              onClick={handleLike}
+              className="flex items-center bg-white text-blue-700 px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0"
+            >
+              <BiLike />
+            </button>
+            <button
+              onClick={handleFavorite}
+              className="flex items-center bg-stone-50 text-white px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0"
+            >
+              <FcLike />
+            </button>
+          </div>
           <Link
             to={`/bloginfo/${blog.id}`}
-            className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
+            className="bg-blue-500 text-white px-4 py-2 rounded-md"
           >
             Read More
           </Link>
-
-          {/* Favorite Button */}
-          <button className="mt-4 ml-2 bg-yellow-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-yellow-600 focus:outline-none focus:shadow-outline-yellow">
-            Favorite
-          </button>
         </div>
       </div>
     </div>

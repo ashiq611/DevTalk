@@ -5,6 +5,8 @@ import { onValue, push, ref, set } from "firebase/database";
 
 
 import Nav from "../components/Nav";
+import { FcLike } from "react-icons/fc";
+import { BiLike } from "react-icons/bi";
 
 
 const BlogInfo = () => {
@@ -66,16 +68,15 @@ const BlogInfo = () => {
 
 
     return (
-     
       <>
         <Nav />
-        <div className="max-w-md mx-auto bg-gray-800 text-white rounded-md overflow-hidden shadow-lg p-4">
+        <div className="w-3/4 mx-auto bg-gray-800 text-white rounded-md overflow-hidden shadow-lg p-4">
           {/* Blog Content */}
           <div>
             {/* Image with shadow */}
             <div className="relative">
               <img
-                className="w-full h-48 object-cover object-center rounded-md shadow"
+                className="w-full h-48 lg:h-96 object-cover object-center rounded-md shadow"
                 src={AllBlogs.thumbnail}
                 alt="Blog Post"
               />
@@ -113,9 +114,23 @@ const BlogInfo = () => {
               ></div>
 
               {/* Favorite Button */}
-              <button className="mt-4 bg-yellow-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-yellow-600 focus:outline-none focus:shadow-outline-yellow">
-                Favorite
-              </button>
+              <div className="flex flex-col sm:flex-row justify-between items-center mt-4">
+                <div className="flex mb-2 sm:mb-0">
+                  <button
+                    // onClick={handleLike}
+                    className="flex items-center bg-white text-blue-700 px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0"
+                  >
+                    <BiLike />
+                  </button>
+                  <button
+                    // onClick={handleFavorite}
+                    className="flex items-center bg-stone-50 text-white px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0"
+                  >
+                    <FcLike />
+                  </button>
+                </div>
+                
+              </div>
             </div>
           </div>
 

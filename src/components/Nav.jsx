@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { userLoginInfo } from "../slices/userSlice";
 
 
+
 const Nav = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -42,7 +43,7 @@ const Nav = () => {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <a>Item 1</a>
+                <Link to="/about">About</Link>
               </li>
               <li>
                 <a>Parent</a>
@@ -56,16 +57,18 @@ const Nav = () => {
                 </ul>
               </li>
               <li>
-                <a>Item 3</a>
+                <a>Favourite</a>
               </li>
             </ul>
           </div>
-          <Link to='/' className="btn btn-ghost text-xl">DevTalk</Link>
+          <Link to="/" className="btn btn-ghost text-xl">
+            DevTalk
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <a>Item 1</a>
+              <Link to="/about">About</Link>
             </li>
             <li>
               <details>
@@ -81,7 +84,7 @@ const Nav = () => {
               </details>
             </li>
             <li>
-              <a>Item 3</a>
+              <a>Favourite</a>
             </li>
           </ul>
         </div>
@@ -125,7 +128,7 @@ const Nav = () => {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <Link to='/profile' className="justify-between">
+                <Link to="/profile" className="justify-between">
                   Profile
                   <span className="badge">New</span>
                 </Link>

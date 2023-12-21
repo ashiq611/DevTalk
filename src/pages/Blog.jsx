@@ -24,7 +24,7 @@ const Blog = () => {
     }, []);
     // console.log(AllBlogs);
     return (
-      <div className=" min-h-screen py-5 lg:py-10 flex gap-10 flex-wrap items-center justify-center">
+      <div className=" min-h-screen py-5 lg:py-10">
         {AllBlogs?.map((blog) => (
           <BlogCard key={blog.id} blog={blog} />
         ))}
