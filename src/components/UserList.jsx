@@ -14,26 +14,26 @@ const UserList = () => {
     onValue(blogRef, (snapshot) => {
       let users = [];
       snapshot.forEach((b) => {
-        if (data.uid != b.key) {
+        // if (data?.uid != b.key) {
           users.push({ ...b.val(), id: b.key });
-        }
+        // }
       });
       setUserList(users);
     });
-  }, [data.uid]);
+  }, []);
 
   useEffect(() => {
     const followRef = ref(fireDB, "follow");
     onValue(followRef, (snapshot) => {
       let users = [];
       snapshot.forEach((f) => {
-        if (data.uid != f.val().senderID) {
+        // if (data?.uid != f.val().senderID) {
           users.push({ ...f.val(), id: f.key });
-        }
+        // }
       });
       setFollowing(users);
     });
-  }, [data.uid]);
+  }, []);
 
   // send follow starts
   const handleFollow = (user) => {
@@ -70,7 +70,7 @@ const UserList = () => {
               <h2 className="text-xl font-semibold text-white text-center mb-2">
                 {user.username}
               </h2>
-              {following ? (
+              {following && data ? (
                 
                 <button
                   // onClick={() => handleUnfollow(user)}
