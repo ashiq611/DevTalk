@@ -13,6 +13,7 @@ import CreateBlog from "./pages/admin/CreateBlog";
 import LoginPage from "./pages/admin/LoginPage";
 import Registration from "./pages/admin/Registration";
 import About from "./pages/About";
+import Favourite from "./pages/admin/Favourite";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/registration" element={<Registration />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/createblog" element={<CreateBlog />} />
+          <Route path="/favourite" element={<Favourite />} />
 
           <Route path="/*" element={<Errors />} />
         </Routes>

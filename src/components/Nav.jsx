@@ -45,10 +45,8 @@ const Nav = () => {
               <li>
                 <Link to="/about">About</Link>
               </li>
-              
-              <li>
-                <a>Favourite</a>
-              </li>
+
+              <li>{data && <Link to="/favourite">Favourite</Link>}</li>
             </ul>
           </div>
           <Link to="/" className="btn btn-ghost text-xl">
@@ -60,10 +58,8 @@ const Nav = () => {
             <li>
               <Link to="/about">About</Link>
             </li>
-            
-            <li>
-              <a>Favourite</a>
-            </li>
+
+            <li>{data && <Link to="/favourite">Favourite</Link>}</li>
           </ul>
         </div>
 

@@ -3,6 +3,7 @@ import  { useEffect, useState } from 'react';
 import { fireDB } from '../firebase.confiq';
 import { onValue, push, ref, remove, set } from 'firebase/database';
 import { useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
 
 const UserList = () => {
   const [userList, setUserList] = useState([]);
@@ -38,14 +39,21 @@ const UserList = () => {
   // send follow starts
   const handleFollow = (user) => {
     console.log(user);
-    set(push(ref(fireDB, "follow")), {
-      senderID: data.uid,
-      senderName: data.displayName,
-      senderProfile: data.photoURL,
-      receiverID: user.id,
-      receiverName: user.username,
-      receiverProfile: user.profile_picture,
-    });
+    if (data) {
+      // User is logged in, handle the follow action
+      console.log(user);
+      set(push(ref(fireDB, "follow")), {
+        senderID: data.uid,
+        senderName: data.displayName,
+        senderProfile: data.photoURL,
+        receiverID: user.id,
+        receiverName: user.username,
+        receiverProfile: user.profile_picture,
+      });
+    } else {
+      // User is not logged in, show an alert
+      toast.error('Login First')
+    }
   };
 
   // // cancel req
@@ -71,7 +79,6 @@ const UserList = () => {
                 {user.username}
               </h2>
               {following && data ? (
-                
                 <button
                   // onClick={() => handleUnfollow(user)}
                   className="bg-blue-500 text-white font-bold px-4 py-2 rounded-full mx-auto"

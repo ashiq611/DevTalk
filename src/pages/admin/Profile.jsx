@@ -202,9 +202,9 @@ const Profile = () => {
                   <td className="border p-2">{blog.date}</td>
                   <td className="border p-2">
                     <>
-                      <button className="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none">
+                      {/* <button className="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none">
                         Edit
-                      </button>
+                      </button> */}
                       <button
                         onClick={() => handleBlogRemove(blog)}
                         className="p-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none ml-2"

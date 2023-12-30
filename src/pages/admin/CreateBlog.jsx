@@ -151,7 +151,7 @@
 
 // CreateBlog.js
 import { useState } from 'react';
-import { Editor } from '@tinymce/tinymce-react';
+
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { fireDB, storage } from '../../firebase.confiq';
 import { useNavigate } from 'react-router-dom';

@@ -9,10 +9,11 @@ const home = () => {
     <Layout>
       {/* <DesignTest/> */}
       {/* <Features /> */}
-      <div className="container mx-auto flex gap-10">
-        <div className="lg:w-3/4 m-5">
+      <div className="container mx-auto flex justify-between">
+        <div className="lg:w-2/4 m-5">
           <Blog />
         </div>
+        <div className="divider lg:divider-horizontal"></div>
         <div className="w-1/4 hidden lg:block sticky top-0">
           {/* Adjust top value based on your design */}
           <h2 className="font-semibold text-lg">If You Want to Follow!</h2>
