@@ -84,9 +84,10 @@ const BlogInfo = () => {
 
             <div className="p-4">
               {/* Category */}
-              <span className="text-blue-500 font-bold uppercase text-sm">
-                {AllBlogs.category}
-              </span>
+              
+              <div className="flex flex-wrap mt-4">
+                <div className="badge badge-primary uppercase">{AllBlogs.category}</div>
+              </div>
 
               {/* Title */}
               <h2 className="mt-2 text-xl font-semibold">{AllBlogs.title}</h2>
@@ -129,7 +130,6 @@ const BlogInfo = () => {
                     <FcLike />
                   </button>
                 </div>
-                
               </div>
             </div>
           </div>
@@ -140,7 +140,7 @@ const BlogInfo = () => {
             {AllComment.map((c) => (
               <div key={c.id}>
                 <div className="flex items-center mb-2">
-                  <p className="text-sm font-medium">
+                  <p className="text-sm font-medium uppercase">
                     {c.name} - {c.date}
                   </p>
                 </div>

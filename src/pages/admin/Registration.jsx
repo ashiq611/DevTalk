@@ -12,6 +12,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getDatabase, ref, set } from "firebase/database";
+import Nav from "../../components/Nav";
 
 const Registration = () => {
   const auth = getAuth();
@@ -115,6 +116,7 @@ const Registration = () => {
 
   return (
     <div>
+      <Nav/>
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:ms-10  lg:text-left">

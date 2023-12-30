@@ -159,6 +159,8 @@ import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { ref as dbref, set, push } from 'firebase/database';
 import Nav from '../../components/Nav';
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const CreateBlog = () => {
   const [blogs, setBlogs] = useState({
@@ -225,6 +227,11 @@ const CreateBlog = () => {
     return { __html: c };
   }
 
+   const handleEditorChange = (content, editor) => {
+     setBlogs({ ...blogs, content });
+     setText(content);
+   };
+
   return (
     <>
       <Nav />
@@ -263,9 +270,10 @@ const CreateBlog = () => {
               onChange={(e) => setBlogs({ ...blogs, category: e.target.value })}
             />
           </div>
+          <ReactQuill theme="snow" value={text} onChange={handleEditorChange} />
 
           {/* TinyMCE Editor */}
-          <Editor
+          {/* <Editor
             apiKey="jtgj35incgax88hnujwssjevhvfy5kisj7vowfjwhsc34xth"
             onEditorChange={(newValue, editor) => {
               setBlogs({ ...blogs, content: newValue });
@@ -278,7 +286,7 @@ const CreateBlog = () => {
               plugins:
                 "a11ychecker advcode advlist advtable anchor autocorrect autolink autoresize autosave casechange charmap checklist code codesample directionality editimage emoticons export footnotes formatpainter fullscreen help image importcss inlinecss insertdatetime link linkchecker lists media mediaembed mentions mergetags nonbreaking pagebreak pageembed permanentpen powerpaste preview quickbars save searchreplace table tableofcontents template tinydrive tinymcespellchecker typography visualblocks visualchars wordcount",
             }}
-          />
+          /> */}
 
           {/* Submit Button */}
           <button onClick={addPost} className="btn mt-8">

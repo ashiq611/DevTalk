@@ -7,6 +7,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { userLoginInfo } from "../../slices/userSlice";
 import { getDatabase, push, ref, set } from "firebase/database";
+import Nav from "../../components/Nav";
 
 
 const LoginPage = () => {
@@ -110,6 +111,7 @@ const LoginPage = () => {
 
   return (
     <div>
+      <Nav/>
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:ms-10 lg:text-left">

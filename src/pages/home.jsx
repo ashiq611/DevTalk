@@ -10,7 +10,7 @@ const home = () => {
       {/* <DesignTest/> */}
       {/* <Features /> */}
       <div className="container mx-auto flex gap-10">
-        <div className="lg:w-3/4">
+        <div className="lg:w-3/4 m-5">
           <Blog />
         </div>
         <div className="w-1/4 hidden lg:block sticky top-0">

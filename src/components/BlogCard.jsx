@@ -30,14 +30,14 @@ const BlogCard = ({blog}) => {
           className="w-full h-48 object-fill mb-4 rounded-md"
         />
         <h1 className="text-3xl font-bold mb-4">{blog.title}</h1>
-        <div className="flex flex-col sm:flex-row items-center mb-4">
+        <div className="flex flex-col sm:flex-row lg:items-center mb-4">
           <img
             src={blog.authorProfile}
             alt={blog.authorName}
             className="w-10 h-10 rounded-full mb-2 sm:mb-0 sm:mr-2"
           />
           <div>
-            <p className="text-gray-300 font-semibold">{blog.authorName}</p>
+            <p className="text-gray-300 font-semibold uppercase">{blog.authorName}</p>
             <p className="text-gray-500">{blog.date}</p>
           </div>
         </div>
