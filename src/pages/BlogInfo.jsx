@@ -16,13 +16,15 @@ const BlogInfo = () => {
   const [name, setName] = useState("");
   const [comment, setComment] = useState("");
   const [isFavorited, setIsFavorited] = useState(false);
+    const [isLiked, setIsLiked] = useState(false);
+  const [allFvrt, setAllFvrt] = useState([]);
 
   useEffect(() => {
     const blogRef = ref(fireDB, "blogs/" + id.id);
     onValue(blogRef, (snapshot) => {
       let blogs;
       blogs = snapshot.val();
-      setAllBlogs(blogs);
+      setAllBlogs({...blogs, id: snapshot.key});
     });
   }, [id.id]);
 
@@ -59,6 +61,13 @@ const BlogInfo = () => {
     });
   }, [id.id]);
 
+
+  const handleLike = () => {
+    // Implement your logic for handling the "Like" button click
+    console.log("Liked!");
+    setIsLiked(!isLiked); // Toggle like state
+  };
+
   const handleFavorite = () => {
     if (data && data.uid) {
       // User is logged in
@@ -78,6 +87,24 @@ const BlogInfo = () => {
   function createMarkup(c) {
     return { __html: c };
   }
+
+  useEffect(() => {
+    if (data) {
+      const blogRef = ref(fireDB, "favorites");
+      onValue(blogRef, (snapshot) => {
+        let blogs = [];
+        snapshot.forEach((b) => {
+          if (data.uid == b.val().fvrtID) {
+            blogs.push(b.val().id);
+          }
+        });
+        setAllFvrt(blogs);
+      });
+    }
+  }, []);
+
+
+  console.log(AllBlogs)
 
   return (
     <>
@@ -129,14 +156,46 @@ const BlogInfo = () => {
             {/* Favorite Button */}
             <div className="flex flex-col sm:flex-row justify-between items-center mt-4">
               <div className="flex mb-2 sm:mb-0">
-                {data && data.uid ? (
-                  <button
-                    onClick={handleFavorite}
-                    className="flex items-center bg-stone-50 text-white px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0"
-                  >
-                    <FcLike />
-                  </button>
-                ) : null}
+                {data && (
+                  <div className="flex mb-2 sm:mb-0">
+                    <button
+                      // onClick={handleLike}
+                      className={`flex items-center ${
+                        isLiked
+                          ? "bg-blue-700 text-white"
+                          : "bg-white text-blue-700"
+                      } px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
+                    >
+                      <BiLike />
+                    </button>
+                    {/* <button
+                onClick={handleFavorite}
+                className={`flex items-center ${
+                  isFavorited
+                    ? "bg-stone-50 text-white"
+                    : "bg-white text-stone-50"
+                } px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
+              >
+                <FcLike />
+              </button> */}
+
+                    {allFvrt.includes(AllBlogs.id) ? (
+                      <button
+                        // onClick={handleFavorite}
+                        className={`flex items-center bg-stone-950  px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
+                      >
+                        <FcLike />
+                      </button>
+                    ) : (
+                      <button
+                        onClick={handleFavorite}
+                        className={`flex items-center bg-white text-red-700 px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
+                      >
+                        <FcLike />
+                      </button>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -146,7 +205,7 @@ const BlogInfo = () => {
         <div className="mt-8">
           <h3 className="text-xl font-semibold mb-4">Comments</h3>
           {AllComment.map((c) => (
-            <div key={c.id}>
+            <div key={c.id} >
               <div className="flex items-center mb-2">
                 <p className="text-sm font-medium uppercase">
                   {c.name} - {c.date}
