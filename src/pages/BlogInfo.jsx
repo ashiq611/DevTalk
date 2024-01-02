@@ -82,7 +82,7 @@ const BlogInfo = () => {
   return (
     <>
       <Nav />
-      <div className="w-3/4 mx-auto bg-gray-800 text-white rounded-md overflow-hidden shadow-lg p-4">
+      <div className="lg:w-3/4 w-full mx-auto bg-gray-800 text-white rounded-md overflow-hidden shadow-lg p-4">
         {/* Blog Content */}
         <div>
           {/* Image with shadow */}

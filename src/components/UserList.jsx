@@ -15,13 +15,20 @@ const UserList = () => {
     onValue(blogRef, (snapshot) => {
       let users = [];
       snapshot.forEach((b) => {
-        // if (data?.uid != b.key) {
+        if(!data){
+          
           users.push({ ...b.val(), id: b.key });
+        }else{
+          if (data?.uid != b.key) {
+             users.push({ ...b.val(), id: b.key });
+          }
+        }
+        // if (data?.uid != b.key) {
         // }
       });
       setUserList(users);
     });
-  }, []);
+  }, [data]);
 
   useEffect(() => {
     const followRef = ref(fireDB, "follow");

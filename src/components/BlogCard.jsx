@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BiLike } from "react-icons/bi";
 import { FcLike } from "react-icons/fc";
-import { push, ref, set } from "firebase/database";
+import { onValue, push, ref, set } from "firebase/database";
 import { fireDB } from "../firebase.confiq";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
@@ -11,6 +11,11 @@ const BlogCard = ({ blog }) => {
   const data = useSelector((state) => state.userLoginInfo.userInfo);
   const [isLiked, setIsLiked] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
+
+  const [allFvrt, setAllFvrt] = useState([]);
+
+
+
 
   const handleLike = () => {
     // Implement your logic for handling the "Like" button click
@@ -34,8 +39,10 @@ const BlogCard = ({ blog }) => {
       // User is logged in
       set(push(ref(fireDB, "favorites")), {
         ...blog,
+        
         fvrtID: data.uid,
       });
+     
       setIsFavorited(!isFavorited); // Toggle favorite state
       toast.success("Post Added as Favorite");
     } else {
@@ -43,12 +50,34 @@ const BlogCard = ({ blog }) => {
       toast.error("Please log in to add this post to favorites.");
       // Optionally, you can redirect the user to the login page or show a login modal.
     }
+
+
   };
 
   // Create markup function
   function createMarkup(c) {
     return { __html: c };
   }
+
+
+   useEffect(() => {
+    if(data){
+
+    
+     const blogRef = ref(fireDB, "favorites");
+     onValue(blogRef, (snapshot) => {
+       let blogs = [];
+       snapshot.forEach((b) => {
+        if(data.uid == b.val().fvrtID){
+
+          blogs.push(b.val().id);
+        }
+       });
+       setAllFvrt(blogs);
+     });}
+   }, []);
+
+   console.log(allFvrt)
 
   return (
     <div>
@@ -92,7 +121,7 @@ const BlogCard = ({ blog }) => {
               >
                 <BiLike />
               </button>
-              <button
+              {/* <button
                 onClick={handleFavorite}
                 className={`flex items-center ${
                   isFavorited
@@ -101,7 +130,23 @@ const BlogCard = ({ blog }) => {
                 } px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
               >
                 <FcLike />
-              </button>
+              </button> */}
+
+              {allFvrt.includes(blog.id) ? (
+                <button
+                  // onClick={handleFavorite}
+                  className={`flex items-center bg-stone-950  px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
+                >
+                  <FcLike />
+                </button>
+              ) : (
+                <button
+                  onClick={handleFavorite}
+                  className={`flex items-center bg-white text-red-700 px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
+                >
+                  <FcLike />
+                </button>
+              )}
             </div>
           )}
           <Link
