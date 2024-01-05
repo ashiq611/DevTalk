@@ -3,8 +3,7 @@ import { useParams } from "react-router-dom";
 import { fireDB } from "../firebase.confiq";
 import { onValue, push, ref, set } from "firebase/database";
 import Nav from "../components/Nav";
-import { FcLike } from "react-icons/fc";
-import { BiLike } from "react-icons/bi";
+import { GiSelfLove } from "react-icons/gi";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 
@@ -109,7 +108,7 @@ const BlogInfo = () => {
   return (
     <>
       <Nav />
-      <div className="lg:w-3/4 w-full mx-auto bg-gray-800 text-white rounded-md overflow-hidden shadow-lg p-4">
+      <div className="lg:w-3/4 w-full mx-auto bg-stone-950 text-white shadow-stone-700 shadow-lg rounded-md overflow-hidden p-4">
         {/* Blog Content */}
         <div>
           {/* Image with shadow */}
@@ -154,44 +153,25 @@ const BlogInfo = () => {
             ></div>
 
             {/* Favorite Button */}
-            <div className="flex flex-col sm:flex-row justify-between items-center mt-4">
+            <div className="flex flex-col sm:flex-row justify-between  mt-4">
               <div className="flex mb-2 sm:mb-0">
                 {data && (
-                  <div className="flex mb-2 sm:mb-0">
-                    <button
-                      // onClick={handleLike}
-                      className={`flex items-center ${
-                        isLiked
-                          ? "bg-blue-700 text-white"
-                          : "bg-white text-blue-700"
-                      } px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
-                    >
-                      <BiLike />
-                    </button>
-                    {/* <button
-                onClick={handleFavorite}
-                className={`flex items-center ${
-                  isFavorited
-                    ? "bg-stone-50 text-white"
-                    : "bg-white text-stone-50"
-                } px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
-              >
-                <FcLike />
-              </button> */}
+                  <div className="mt-5">
+                   
 
                     {allFvrt.includes(AllBlogs.id) ? (
                       <button
                         // onClick={handleFavorite}
-                        className={`flex items-center bg-stone-950  px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
+                        className={`flex items-center bg-red-700  px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
                       >
-                        <FcLike />
+                        <GiSelfLove />  
                       </button>
                     ) : (
                       <button
                         onClick={handleFavorite}
                         className={`flex items-center bg-white text-red-700 px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
                       >
-                        <FcLike />
+                        <GiSelfLove />
                       </button>
                     )}
                   </div>
@@ -205,7 +185,7 @@ const BlogInfo = () => {
         <div className="mt-8">
           <h3 className="text-xl font-semibold mb-4">Comments</h3>
           {AllComment.map((c) => (
-            <div key={c.id} >
+            <div key={c.id}>
               <div className="flex items-center mb-2">
                 <p className="text-sm font-medium uppercase">
                   {c.name} - {c.date}

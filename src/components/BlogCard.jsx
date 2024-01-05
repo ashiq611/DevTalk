@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { BiLike } from "react-icons/bi";
-import { FcLike } from "react-icons/fc";
+import { GiSelfLove } from "react-icons/gi";
+import { AiOutlineComment } from "react-icons/ai";
 import { onValue, push, ref, set } from "firebase/database";
 import { fireDB } from "../firebase.confiq";
 import toast from "react-hot-toast";
@@ -81,80 +81,70 @@ const BlogCard = ({ blog }) => {
 
   return (
     <div>
-      <div className="w-full mx-auto mt-8 p-4 bg-gray-800 text-white shadow-md rounded-md">
-        <img
-          src={blog.thumbnail}
-          alt="Blog Cover"
-          className="w-full h-48 object-fill mb-4 rounded-md"
-        />
-        <h1 className="text-3xl font-bold mb-4">{blog.title}</h1>
-        <div className="flex flex-col sm:flex-row lg:items-center mb-4">
+      <div className="card lg:card-side bg-stone-950 shadow-stone-700 shadow-lg m-10 rounded-xl">
+        <figure className="md:w-2/3 md:h-full m-2">
           <img
-            src={blog.authorProfile}
-            alt={blog.authorName}
-            className="w-10 h-10 rounded-full mb-2 sm:mb-0 sm:mr-2"
+            className="w-full h-96 object-cover rounded-md"
+            src={blog.thumbnail}
+            alt="Album"
           />
-          <div>
-            <p className="text-gray-300 font-semibold uppercase">
-              {blog.authorName}
-            </p>
-            <p className="text-gray-500">{blog.date}</p>
-          </div>
-        </div>
-        <div className="text-gray-300">
-          <div
-            dangerouslySetInnerHTML={createMarkup(blog.content)}
-            className="prose text-white mt-4"
-          ></div>
-        </div>
-        <div className="flex flex-wrap mt-4">
-          <div className="badge badge-primary">{blog.category}</div>
-        </div>
-        <div className="flex flex-col sm:flex-row justify-between items-center mt-4">
-          {data && (
-            <div className="flex mb-2 sm:mb-0">
-              <button
-                onClick={handleLike}
-                className={`flex items-center ${
-                  isLiked ? "bg-blue-700 text-white" : "bg-white text-blue-700"
-                } px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
-              >
-                <BiLike />
-              </button>
-              {/* <button
-                onClick={handleFavorite}
-                className={`flex items-center ${
-                  isFavorited
-                    ? "bg-stone-50 text-white"
-                    : "bg-white text-stone-50"
-                } px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
-              >
-                <FcLike />
-              </button> */}
-
-              {allFvrt.includes(blog.id) ? (
-                <button
-                  // onClick={handleFavorite}
-                  className={`flex items-center bg-stone-950  px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
-                >
-                  <FcLike />
-                </button>
-              ) : (
-                <button
-                  onClick={handleFavorite}
-                  className={`flex items-center bg-white text-red-700 px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
-                >
-                  <FcLike />
-                </button>
-              )}
+        </figure>
+        <div className="card-body">
+          <h2 className="card-title text-2xl font-bold">{blog.title}</h2>
+          <div className="flex flex-col sm:flex-row lg:items-center mb-4">
+            <img
+              src={blog.authorProfile}
+              alt={blog.authorName}
+              className="w-10 h-10 rounded-full mb-2 sm:mb-0 sm:mr-2"
+            />
+            <div>
+              <p className="text-gray-300 font-semibold uppercase">
+                {blog.authorName}
+              </p>
+              <p className="text-gray-500">{blog.date}</p>
             </div>
-          )}
-          <Link
-            to={`/bloginfo/${blog.id}`}
-            className="bg-blue-500 text-white px-4 py-2 rounded-md"
-          >
-            Read More
-          </Link>
+          </div>
+          <div className="text-gray-300">
+            <div
+              dangerouslySetInnerHTML={createMarkup(blog.content)}
+              className="prose text-white mt-4"
+            ></div>
+          </div>
+          <div className="badge badge-ghost">{blog.category}</div>
+          <div>
+            {data && (
+              <div className="mt-5 mb-5 flex justify-between">
+                {allFvrt.includes(blog.id) ? (
+                  <button
+                    // onClick={handleFavorite}
+                    className={`flex items-center bg-red-700 px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
+                  >
+                    <GiSelfLove />
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleFavorite}
+                    className={`flex items-center bg-white text-red-700 px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
+                  >
+                    <GiSelfLove />
+                  </button>
+                )}
+                {
+                  <button className="`flex items-center bg-white text-indigo-900 px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0">
+                    <AiOutlineComment />
+                  </button>
+                }
+              </div>
+            )}
+          </div>
+          <div className="card-actions justify-end">
+            <Link
+              to={`/bloginfo/${blog.id}`}
+              className="bg-blue-500 text-white px-4 py-2 rounded-md"
+            >
+              Read More
+            </Link>
+          </div>
         </div>
       </div>
     </div>
