@@ -15,12 +15,11 @@ const UserList = () => {
     onValue(blogRef, (snapshot) => {
       let users = [];
       snapshot.forEach((b) => {
-        if(!data){
-          
+        if (!data) {
           users.push({ ...b.val(), id: b.key });
-        }else{
+        } else {
           if (data?.uid != b.key) {
-             users.push({ ...b.val(), id: b.key });
+            users.push({ ...b.val(), id: b.key });
           }
         }
         // if (data?.uid != b.key) {
@@ -34,10 +33,11 @@ const UserList = () => {
     const followRef = ref(fireDB, "follow");
     onValue(followRef, (snapshot) => {
       let users = [];
+
       snapshot.forEach((f) => {
-        // if (data?.uid != f.val().senderID) {
-          users.push({ ...f.val(), id: f.key });
-        // }
+        if (data && data.uid == f.val().senderID) {
+          users.push({...f.val(), id: f.key}); // Push the entire follow object
+        }
       });
       setFollowing(users);
     });
@@ -59,7 +59,23 @@ const UserList = () => {
       });
     } else {
       // User is not logged in, show an alert
-      toast.error('Login First')
+      toast.error("Login First");
+    }
+  };
+
+  // unfollow starts
+  const handleUnfollow = (user) => {
+    console.log('hello')
+    if (data) {
+      // User is logged in, handle the unfollow action
+      const followToRemove = following.find(
+        (follow) => follow.receiverID === user.id
+      );
+
+      if (followToRemove) {
+        // Remove the follow entry from the "follow" node
+        remove(ref(fireDB, `follow/${followToRemove.id}`));
+      }
     }
   };
 
@@ -67,7 +83,7 @@ const UserList = () => {
   // const handleUnfollow = (user) => {
   //   remove(ref(fireDB, "follow/" + user.id));
   // };
-
+  console.log(following);
   return (
     <div>
       {userList.map((user) => {
@@ -85,9 +101,10 @@ const UserList = () => {
               <h2 className="text-xl font-semibold text-white text-center mb-2">
                 {user.username}
               </h2>
-              {following && data ? (
+              {data &&
+              following.some((follow) => follow.receiverID === user.id) ? (
                 <button
-                  // onClick={() => handleUnfollow(user)}
+                  onClick={() => handleUnfollow(user)}
                   className="bg-blue-500 text-white font-bold px-4 py-2 rounded-full mx-auto"
                 >
                   Following

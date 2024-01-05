@@ -14,7 +14,7 @@ const home = () => {
           <Blog />
         </div>
         <div className="divider lg:divider-horizontal"></div>
-        <div className="w-1/4 hidden lg:block sticky top-0">
+        <div className="w-1/4 h-screen hidden lg:block sticky top-16">
           {/* Adjust top value based on your design */}
           <h2 className="font-semibold text-lg">If You Want to Follow!</h2>
           <UserList />

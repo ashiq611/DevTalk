@@ -77,6 +77,12 @@ const BlogCard = ({ blog }) => {
      });}
    }, []);
 
+   function getFirstWords(content, numWords) {
+     const words = content.split(" ");
+     const slicedWords = words.slice(0, numWords);
+     return slicedWords.join(" ");
+   }
+
    console.log(allFvrt)
 
   return (
@@ -104,11 +110,14 @@ const BlogCard = ({ blog }) => {
               <p className="text-gray-500">{blog.date}</p>
             </div>
           </div>
-          <div className="text-gray-300">
+          <div className="text-gray-300 flex gap-2 items-end">
             <div
-              dangerouslySetInnerHTML={createMarkup(blog.content)}
+              dangerouslySetInnerHTML={createMarkup(
+                getFirstWords(blog.content, 5)
+              )}
               className="prose text-white mt-4"
             ></div>
+            <span className="font-bold" >...</span>
           </div>
           <div className="badge badge-ghost">{blog.category}</div>
           <div>
@@ -124,15 +133,18 @@ const BlogCard = ({ blog }) => {
                 ) : (
                   <button
                     onClick={handleFavorite}
-                    className={`flex items-center bg-white text-red-700 px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
+                    className={`flex items-center bg-white text-red-700 hover:bg-slate-400 px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
                   >
                     <GiSelfLove />
                   </button>
                 )}
                 {
-                  <button className="`flex items-center bg-white text-indigo-900 px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0">
+                  <Link
+                    to={`/bloginfo/${blog.id}`}
+                    className="`flex items-center bg-white text-indigo-900 hover:bg-slate-400 px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0"
+                  >
                     <AiOutlineComment />
-                  </button>
+                  </Link>
                 }
               </div>
             )}

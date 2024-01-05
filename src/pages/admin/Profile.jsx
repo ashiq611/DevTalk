@@ -62,6 +62,24 @@ const Profile = () => {
     remove(ref(fireDB, `blogs/${b.id}`));
   };
 
+  // unfollow starts
+  const handleUnfollow = (f) => {
+    console.log("hello");
+    if (user) {
+      // User is logged in, handle the unfollow action
+      const followToRemove = following.find(
+        (follow) => follow.id === f.id
+      );
+console.log(followToRemove);
+      if (followToRemove) {
+        // Remove the follow entry from the "follow" node
+        remove(ref(fireDB, `follow/${followToRemove.id}`));
+      }
+    }
+  };
+
+  console.log(following);
+
   return (
     <div className="min-h-screen bg-black">
       <Nav />
@@ -124,7 +142,9 @@ const Profile = () => {
                       {f.receiverName}
                     </h2>
                     <div>
-                      <button>Unfollow</button>
+                      <button onClick={() => handleUnfollow(f)}>
+                        Unfollow
+                      </button>
                     </div>
                   </div>
                 </div>
