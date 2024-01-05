@@ -84,7 +84,7 @@ console.log(followToRemove);
     <div className="min-h-screen bg-black">
       <Nav />
       <div className="container mx-auto p-4 sm:p-8">
-        <div className="max-w-md mx-auto bg-indigo-500 text-center rounded-lg shadow-md overflow-hidden">
+        <div className="max-w-md mx-auto bg-slate-900 text-center rounded-lg shadow-md overflow-hidden">
           <div className="p-4">
             <img
               src={user.photoURL}
@@ -96,13 +96,13 @@ console.log(followToRemove);
             </h2>
             <Link
               to="/createblog"
-              className="bg-blue-500 text-white px-4 py-2 rounded-full block"
+              className="bg-indigo-600 btn text-white  rounded-full "
             >
               Create Blog
             </Link>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-4">
               <button
-                className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg"
+                className="btn btn-xs sm:btn-sm md:btn-md rounded-lg"
                 onClick={() =>
                   document.getElementById("my_modal_5").showModal()
                 }
@@ -110,7 +110,7 @@ console.log(followToRemove);
                 Following
               </button>
               <button
-                className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg"
+                className="btn btn-xs sm:btn-sm md:btn-md rounded-lg"
                 onClick={() =>
                   document.getElementById("my_modal_6").showModal()
                 }

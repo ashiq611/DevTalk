@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { GiSelfLove } from "react-icons/gi";
 import { AiOutlineComment } from "react-icons/ai";
+import { FaHashtag } from "react-icons/fa";
 import { onValue, push, ref, set } from "firebase/database";
 import { fireDB } from "../firebase.confiq";
 import toast from "react-hot-toast";
@@ -13,9 +14,6 @@ const BlogCard = ({ blog }) => {
   const [isFavorited, setIsFavorited] = useState(false);
 
   const [allFvrt, setAllFvrt] = useState([]);
-
-
-
 
   const handleLike = () => {
     // Implement your logic for handling the "Like" button click
@@ -39,10 +37,10 @@ const BlogCard = ({ blog }) => {
       // User is logged in
       set(push(ref(fireDB, "favorites")), {
         ...blog,
-        
+
         fvrtID: data.uid,
       });
-     
+
       setIsFavorited(!isFavorited); // Toggle favorite state
       toast.success("Post Added as Favorite");
     } else {
@@ -50,8 +48,6 @@ const BlogCard = ({ blog }) => {
       toast.error("Please log in to add this post to favorites.");
       // Optionally, you can redirect the user to the login page or show a login modal.
     }
-
-
   };
 
   // Create markup function
@@ -59,31 +55,28 @@ const BlogCard = ({ blog }) => {
     return { __html: c };
   }
 
+  useEffect(() => {
+    if (data) {
+      const blogRef = ref(fireDB, "favorites");
+      onValue(blogRef, (snapshot) => {
+        let blogs = [];
+        snapshot.forEach((b) => {
+          if (data.uid == b.val().fvrtID) {
+            blogs.push(b.val().id);
+          }
+        });
+        setAllFvrt(blogs);
+      });
+    }
+  }, []);
 
-   useEffect(() => {
-    if(data){
+  function getFirstWords(content, numWords) {
+    const words = content.split(" ");
+    const slicedWords = words.slice(0, numWords);
+    return slicedWords.join(" ");
+  }
 
-    
-     const blogRef = ref(fireDB, "favorites");
-     onValue(blogRef, (snapshot) => {
-       let blogs = [];
-       snapshot.forEach((b) => {
-        if(data.uid == b.val().fvrtID){
-
-          blogs.push(b.val().id);
-        }
-       });
-       setAllFvrt(blogs);
-     });}
-   }, []);
-
-   function getFirstWords(content, numWords) {
-     const words = content.split(" ");
-     const slicedWords = words.slice(0, numWords);
-     return slicedWords.join(" ");
-   }
-
-   console.log(allFvrt)
+  console.log(allFvrt);
 
   return (
     <div>
@@ -117,23 +110,29 @@ const BlogCard = ({ blog }) => {
               )}
               className="prose text-white mt-4"
             ></div>
-            <span className="font-bold" >...</span>
+            <span className="font-bold">...</span>
           </div>
-          <div className="badge badge-ghost">{blog.category}</div>
+          
+           
+            <div className="badge badge-outline rounded-lg">
+              <FaHashtag />
+              {blog.category}
+            </div>
+         
           <div>
             {data && (
               <div className="mt-5 mb-5 flex justify-between">
                 {allFvrt.includes(blog.id) ? (
                   <button
                     // onClick={handleFavorite}
-                    className={`flex items-center bg-red-700 px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
+                    className={`flex items-center bg-red-700 hover:scale-110 transition-all   px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
                   >
                     <GiSelfLove />
                   </button>
                 ) : (
                   <button
                     onClick={handleFavorite}
-                    className={`flex items-center bg-white text-red-700 hover:bg-slate-400 px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
+                    className={`flex items-center bg-white text-red-700 hover:bg-slate-400 transition-all  hover:scale-110 px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
                   >
                     <GiSelfLove />
                   </button>
@@ -141,7 +140,7 @@ const BlogCard = ({ blog }) => {
                 {
                   <Link
                     to={`/bloginfo/${blog.id}`}
-                    className="`flex items-center bg-white text-indigo-900 hover:bg-slate-400 px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0"
+                    className="`flex items-center bg-white text-indigo-900 hover:bg-slate-400 hover:scale-110 transition-all  px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0"
                   >
                     <AiOutlineComment />
                   </Link>
@@ -152,7 +151,7 @@ const BlogCard = ({ blog }) => {
           <div className="card-actions justify-end">
             <Link
               to={`/bloginfo/${blog.id}`}
-              className="bg-blue-500 text-white px-4 py-2 rounded-md"
+              className="bg-blue-500 btn text-white px-4 py-2 rounded-md"
             >
               Read More
             </Link>

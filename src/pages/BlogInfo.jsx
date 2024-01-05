@@ -6,6 +6,7 @@ import Nav from "../components/Nav";
 import { GiSelfLove } from "react-icons/gi";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import { FaHashtag } from "react-icons/fa";
 
 const BlogInfo = () => {
   const id = useParams();
@@ -123,7 +124,8 @@ const BlogInfo = () => {
           <div className="p-4">
             {/* Category */}
             <div className="flex flex-wrap mt-4">
-              <div className="badge badge-primary uppercase">
+              <div className="badge badge-outline rounded-lg">
+                <FaHashtag />
                 {AllBlogs.category}
               </div>
             </div>
@@ -157,19 +159,17 @@ const BlogInfo = () => {
               <div className="flex mb-2 sm:mb-0">
                 {data && (
                   <div className="mt-5">
-                   
-
                     {allFvrt.includes(AllBlogs.id) ? (
                       <button
                         // onClick={handleFavorite}
-                        className={`flex items-center bg-red-700  px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
+                        className={`flex items-center bg-red-700   transition-all  hover:scale-110  px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
                       >
-                        <GiSelfLove />  
+                        <GiSelfLove />
                       </button>
                     ) : (
                       <button
                         onClick={handleFavorite}
-                        className={`flex items-center bg-white text-red-700 px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
+                        className={`flex items-center bg-white text-red-700  hover:bg-slate-400 transition-all  hover:scale-110 px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
                       >
                         <GiSelfLove />
                       </button>

@@ -90,7 +90,7 @@ const UserList = () => {
         return (
           <div
             key={user.id}
-            className="max-w-md mx-auto my-5 bg-indigo-500 text-center rounded-lg shadow-md overflow-hidden"
+            className="max-w-md mx-auto my-5 bg-blue-950 text-center rounded-lg shadow-lg shadow-blue-900 overflow-hidden"
           >
             <div className="p-4">
               <img
@@ -105,14 +105,14 @@ const UserList = () => {
               following.some((follow) => follow.receiverID === user.id) ? (
                 <button
                   onClick={() => handleUnfollow(user)}
-                  className="bg-blue-500 text-white font-bold px-4 py-2 rounded-full mx-auto"
+                  className="btn btn-xs sm:btn-sm md:btn-md rounded-lg bg-indigo-500"
                 >
                   Following
                 </button>
               ) : (
                 <button
                   onClick={() => handleFollow(user)}
-                  className="bg-blue-500 text-white font-bold px-4 py-2 rounded-full mx-auto"
+                  className="btn btn-xs sm:btn-sm md:btn-md rounded-lg bg-sky-800"
                 >
                   Follow
                 </button>
