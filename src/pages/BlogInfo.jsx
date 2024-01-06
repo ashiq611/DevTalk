@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fireDB } from "../firebase.confiq";
-import { onValue, push, ref, set } from "firebase/database";
+import { onValue, push, ref, remove, set } from "firebase/database";
 import Nav from "../components/Nav";
 import { GiSelfLove } from "react-icons/gi";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { FaHashtag } from "react-icons/fa";
+import AllBlogs from './AllBlogs';
 
 const BlogInfo = () => {
   const id = useParams();
@@ -62,11 +63,6 @@ const BlogInfo = () => {
   }, [id.id]);
 
 
-  const handleLike = () => {
-    // Implement your logic for handling the "Like" button click
-    console.log("Liked!");
-    setIsLiked(!isLiked); // Toggle like state
-  };
 
   const handleFavorite = () => {
     if (data && data.uid) {
@@ -103,8 +99,42 @@ const BlogInfo = () => {
     }
   }, []);
 
+  const handleRemoveFavorite = (AllBlogs) => {
+    if (data && data.uid) {
+      const favoriteRef = ref(fireDB, "favorites");
+      onValue(favoriteRef, (snapshot) => {
+        snapshot.forEach((favoriteSnapshot) => {
+          const favorite = favoriteSnapshot.val();
+          if (favorite.fvrtID === data.uid && favorite.id === AllBlogs.id) {
+            const favoriteToRemoveRef = ref(
+              fireDB,
+              `favorites/${favoriteSnapshot.key}`
+            );
 
-  console.log(AllBlogs)
+            // Remove the favorite
+            remove(favoriteToRemoveRef)
+              .then(() => {
+                toast.success("Post Removed from Favorites");
+
+                // Update the state to exclude the removed favorite
+                setAllFvrt((prevFvrt) =>
+                  prevFvrt.filter((id) => id !== blog.id)
+                );
+
+                setIsFavorited(false); // Set favorite state to false
+              })
+              .catch((error) => {
+                console.error("Error removing favorite:", error.message);
+                toast.error("Failed to remove post from Favorites");
+              });
+          }
+        });
+      });
+    }
+  };
+
+
+  // console.log(AllBlogs)
 
   return (
     <>
@@ -161,7 +191,7 @@ const BlogInfo = () => {
                   <div className="mt-5">
                     {allFvrt.includes(AllBlogs.id) ? (
                       <button
-                        // onClick={handleFavorite}
+                        onClick={() => handleRemoveFavorite(AllBlogs)}
                         className={`flex items-center bg-red-700   transition-all  hover:scale-110  px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
                       >
                         <GiSelfLove />

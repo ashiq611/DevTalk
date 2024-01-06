@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import Nav from "../../components/Nav";
 import { fireDB } from "../../firebase.confiq";
+import { FaCloudUploadAlt } from "react-icons/fa";
+import ChangeDP from "../ChangeDP";
 
 const Profile = () => {
   const [Allblogs, setAllBlogs] = useState([]);
@@ -83,14 +85,27 @@ console.log(followToRemove);
   return (
     <div className="min-h-screen bg-black">
       <Nav />
+      <div>
+        <ChangeDP/>
+      </div>
       <div className="container mx-auto p-4 sm:p-8">
         <div className="max-w-md mx-auto bg-slate-900 text-center rounded-lg shadow-md overflow-hidden">
           <div className="p-4">
-            <img
-              src={user.photoURL}
-              alt="Profile"
-              className="w-24 h-24 rounded-full mx-auto mb-4"
-            />
+            <div className="relative group">
+              <img
+                src={user.photoURL}
+                alt="Profile"
+                className="w-24 h-24 rounded-full mx-auto mb-4 "
+              />
+              <div
+                className="uploadIcon h-full w-full hidden group-hover:flex absolute left-0 top-0 justify-center items-center text-3xl text-yellow-500 bg-black bg-opacity-70 cursor-pointer"
+                onClick={() =>
+                  document.getElementById("my_modal_11").showModal()
+                }
+              >
+                <FaCloudUploadAlt />
+              </div>
+            </div>
             <h2 className="text-xl font-semibold text-white mb-2">
               {user.displayName}
             </h2>

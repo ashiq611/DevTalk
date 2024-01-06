@@ -3,23 +3,19 @@ import { Link } from "react-router-dom";
 import { GiSelfLove } from "react-icons/gi";
 import { AiOutlineComment } from "react-icons/ai";
 import { FaHashtag } from "react-icons/fa";
-import { onValue, push, ref, set } from "firebase/database";
+import { onValue, push, ref, remove, set } from "firebase/database";
 import { fireDB } from "../firebase.confiq";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 
 const BlogCard = ({ blog }) => {
   const data = useSelector((state) => state.userLoginInfo.userInfo);
-  const [isLiked, setIsLiked] = useState(false);
+
   const [isFavorited, setIsFavorited] = useState(false);
 
   const [allFvrt, setAllFvrt] = useState([]);
 
-  const handleLike = () => {
-    // Implement your logic for handling the "Like" button click
-    console.log("Liked!");
-    setIsLiked(!isLiked); // Toggle like state
-  };
+ 
 
   // const handleFavorite = (blog) => {
   //   // Implement your logic for handling the "Favorite" button click
@@ -32,21 +28,42 @@ const BlogCard = ({ blog }) => {
   //   toast.success("Post Added as Favorite");
   // };
 
-  const handleFavorite = () => {
+  // const handleFavorite = (blog) => {
+  //   if (data && data.uid) {
+  //     // User is logged in
+  //     set(push(ref(fireDB, "favorites")), {
+  //       ...blog,
+
+  //       fvrtID: data.uid,
+  //     });
+
+      
+
+  //     setIsFavorited(!isFavorited); // Toggle favorite state
+  //     toast.success("Post Added as Favorite");
+  //   } else {
+  //     // User is not logged in
+  //     toast.error("Please log in to add this post to favorites.");
+  //     // Optionally, you can redirect the user to the login page or show a login modal.
+  //   }
+  // };
+
+  const handleFavorite = (blog) => {
     if (data && data.uid) {
       // User is logged in
       set(push(ref(fireDB, "favorites")), {
         ...blog,
-
         fvrtID: data.uid,
       });
+
+      // Update the state to include the new favorite
+      setAllFvrt((prevFvrt) => [...prevFvrt, blog.id]);
 
       setIsFavorited(!isFavorited); // Toggle favorite state
       toast.success("Post Added as Favorite");
     } else {
       // User is not logged in
       toast.error("Please log in to add this post to favorites.");
-      // Optionally, you can redirect the user to the login page or show a login modal.
     }
   };
 
@@ -76,11 +93,65 @@ const BlogCard = ({ blog }) => {
     return slicedWords.join(" ");
   }
 
+  // const handleRemoveFavorite = (blog) => {
+  //   if (data && data.uid) {
+  //     const favoriteRef = ref(fireDB, "favorites");
+  //     onValue(favoriteRef, (snapshot) => {
+  //       snapshot.forEach((favoriteSnapshot) => {
+  //         const favorite = favoriteSnapshot.val();
+  //         if (favorite.fvrtID === data.uid && favorite.id === blog.id) {
+  //           const favoriteToRemoveRef = ref(
+  //             fireDB,
+  //             `favorites/${favoriteSnapshot.key}`
+  //           );
+  //           remove(favoriteToRemoveRef);
+  //           setIsFavorited(false); // Set favorite state to false
+  //           toast.success("Post Removed from Favorites");
+  //         }
+  //       });
+  //     });
+  //   }
+  // };
+
+const handleRemoveFavorite = (blog) => {
+  if (data && data.uid) {
+    const favoriteRef = ref(fireDB, "favorites");
+    onValue(favoriteRef, (snapshot) => {
+      snapshot.forEach((favoriteSnapshot) => {
+        const favorite = favoriteSnapshot.val();
+        if (favorite.fvrtID === data.uid && favorite.id === blog.id) {
+          const favoriteToRemoveRef = ref(
+            fireDB,
+            `favorites/${favoriteSnapshot.key}`
+          );
+
+          // Remove the favorite
+          remove(favoriteToRemoveRef)
+            .then(() => {
+              toast.success("Post Removed from Favorites");
+
+              // Update the state to exclude the removed favorite
+              setAllFvrt((prevFvrt) => prevFvrt.filter((id) => id !== blog.id));
+
+              setIsFavorited(false); // Set favorite state to false
+            })
+            .catch((error) => {
+              console.error("Error removing favorite:", error.message);
+              toast.error("Failed to remove post from Favorites");
+            });
+        }
+      });
+    });
+  }
+};
+
+
+
   console.log(allFvrt);
 
   return (
     <div>
-      <div className="card lg:card-side bg-stone-950 shadow-stone-700 shadow-lg m-10 rounded-xl">
+      <div className="card lg:card-side bg-stone-950 shadow-stone-700 shadow-lg my-10 rounded-xl">
         <figure className="md:w-2/3 md:h-full m-2">
           <img
             className="w-full h-96 object-cover rounded-md"
@@ -124,14 +195,14 @@ const BlogCard = ({ blog }) => {
               <div className="mt-5 mb-5 flex justify-between">
                 {allFvrt.includes(blog.id) ? (
                   <button
-                    // onClick={handleFavorite}
+                    onClick={() => handleRemoveFavorite(blog)}
                     className={`flex items-center bg-red-700 hover:scale-110 transition-all   px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
                   >
                     <GiSelfLove />
                   </button>
                 ) : (
                   <button
-                    onClick={handleFavorite}
+                    onClick={() => handleFavorite(blog)}
                     className={`flex items-center bg-white text-red-700 hover:bg-slate-400 transition-all  hover:scale-110 px-4 py-2 rounded-full mr-2 mb-2 sm:mb-0`}
                   >
                     <GiSelfLove />
