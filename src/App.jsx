@@ -14,6 +14,8 @@ import LoginPage from "./pages/admin/LoginPage";
 import Registration from "./pages/admin/Registration";
 import About from "./pages/About";
 import Favourite from "./pages/admin/Favourite";
+import Settings from "./pages/admin/Settings";
+import ForgotPassword from "./pages/admin/ForgotPassword";
 
 function App() {
   return (
@@ -27,8 +29,10 @@ function App() {
           <Route path="/bloginfo/:id" element={<BlogInfo />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/registration" element={<Registration />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/createblog" element={<CreateBlog />} />
+          <Route path="/settings" element={<Settings />} />
           <Route path="/favourite" element={<Favourite />} />
 
           <Route path="/*" element={<Errors />} />

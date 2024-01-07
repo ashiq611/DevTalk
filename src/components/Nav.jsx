@@ -108,7 +108,7 @@ const Nav = () => {
                 </Link>
               </li>
               <li>
-                <a>Settings</a>
+                <Link to="/settings">Settings</Link>
               </li>
               <li>
                 <button onClick={logOutHandle}>Logout</button>

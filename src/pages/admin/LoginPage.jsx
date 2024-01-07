@@ -118,14 +118,14 @@ const LoginPage = () => {
             <h1 className="text-5xl font-bold">Login to your account!</h1>
             <p className="py-6">
               Enjoy Your Free Time,{" "}
-              <span className="text-blue-800 font-bold">ChatInstant </span>give
+              <span className="text-white font-bold">DevTalk </span>give
               you Entertainment
             </p>
             <div className="flex justify-center">
               <Lottie className="w-60" animationData={loginAni} />
             </div>
           </div>
-          <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+          <div className="card flex-shrink-0 w-full max-w-sm rounded-lg shadow-2xl shadow-slate-800 bg-base-100">
             <form onSubmit={handleSubmit} className="card-body">
               <div className="form-control">
                 <label className="label">

@@ -59,7 +59,7 @@ const Favourite = () => {
   return (
     <>
     <Nav/>
-    <div className=" min-h-screen py-5 lg:py-10 m-5">
+    <div className=" min-h-screen container mx-auto py-5 lg:py-10 m-5">
       {fvrt?.map((blog) => (
           <BlogCard key={blog.key} blog={blog} />
           ))}

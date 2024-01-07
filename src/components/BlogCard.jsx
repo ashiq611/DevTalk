@@ -7,6 +7,8 @@ import { onValue, push, ref, remove, set } from "firebase/database";
 import { fireDB } from "../firebase.confiq";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
+import { FacebookIcon, FacebookShareButton } from "react-share";
+import ShareModal from "./ShareModal";
 
 const BlogCard = ({ blog }) => {
   const data = useSelector((state) => state.userLoginInfo.userInfo);
@@ -14,8 +16,6 @@ const BlogCard = ({ blog }) => {
   const [isFavorited, setIsFavorited] = useState(false);
 
   const [allFvrt, setAllFvrt] = useState([]);
-
- 
 
   // const handleFavorite = (blog) => {
   //   // Implement your logic for handling the "Favorite" button click
@@ -36,8 +36,6 @@ const BlogCard = ({ blog }) => {
 
   //       fvrtID: data.uid,
   //     });
-
-      
 
   //     setIsFavorited(!isFavorited); // Toggle favorite state
   //     toast.success("Post Added as Favorite");
@@ -99,7 +97,7 @@ const BlogCard = ({ blog }) => {
   //     onValue(favoriteRef, (snapshot) => {
   //       snapshot.forEach((favoriteSnapshot) => {
   //         const favorite = favoriteSnapshot.val();
-  //         if (favorite.fvrtID === data.uid && favorite.id === blog.id) {
+
   //           const favoriteToRemoveRef = ref(
   //             fireDB,
   //             `favorites/${favoriteSnapshot.key}`
@@ -107,47 +105,50 @@ const BlogCard = ({ blog }) => {
   //           remove(favoriteToRemoveRef);
   //           setIsFavorited(false); // Set favorite state to false
   //           toast.success("Post Removed from Favorites");
-  //         }
+
   //       });
   //     });
   //   }
   // };
 
-const handleRemoveFavorite = (blog) => {
-  if (data && data.uid) {
-    const favoriteRef = ref(fireDB, "favorites");
-    onValue(favoriteRef, (snapshot) => {
-      snapshot.forEach((favoriteSnapshot) => {
-        const favorite = favoriteSnapshot.val();
-        if (favorite.fvrtID === data.uid && favorite.id === blog.id) {
-          const favoriteToRemoveRef = ref(
-            fireDB,
-            `favorites/${favoriteSnapshot.key}`
-          );
+  const handleRemoveFavorite = (blog) => {
+    if (data && data.uid) {
+      const favoriteRef = ref(fireDB, "favorites");
+      onValue(favoriteRef, (snapshot) => {
+        snapshot.forEach((favoriteSnapshot) => {
+          const favorite = favoriteSnapshot.val();
+          if (favorite.fvrtID === data.uid && favorite.id === blog.id) {
+            const favoriteToRemoveRef = ref(
+              fireDB,
+              `favorites/${favoriteSnapshot.key}`
+            );
 
-          // Remove the favorite
-          remove(favoriteToRemoveRef)
-            .then(() => {
-              toast.success("Post Removed from Favorites");
+            // Remove the favorite
+            remove(favoriteToRemoveRef)
+              .then(() => {
+                toast.success("Post Removed from Favorites");
 
-              // Update the state to exclude the removed favorite
-              setAllFvrt((prevFvrt) => prevFvrt.filter((id) => id !== blog.id));
+                // Update the state to exclude the removed favorite
+                setAllFvrt((prevFvrt) =>
+                  prevFvrt.filter((id) => id !== blog.id)
+                );
 
-              setIsFavorited(false); // Set favorite state to false
-            })
-            .catch((error) => {
-              console.error("Error removing favorite:", error.message);
-              toast.error("Failed to remove post from Favorites");
-            });
-        }
+                setIsFavorited(false); // Set favorite state to false
+              })
+              .catch((error) => {
+                console.error("Error removing favorite:", error.message);
+                toast.error("Failed to remove post from Favorites");
+              });
+          }
+        });
       });
-    });
-  }
-};
+    }
+  };
+  const currentURL = window.location.href;
+   const blogURL = `${currentURL}/${blog.id}`;
+ 
 
-
-
-  console.log(allFvrt);
+  //  console.log(blogURL);
 
   return (
     <div>
@@ -183,13 +184,12 @@ const handleRemoveFavorite = (blog) => {
             ></div>
             <span className="font-bold">...</span>
           </div>
-          
-           
-            <div className="badge badge-outline rounded-lg">
-              <FaHashtag />
-              {blog.category}
-            </div>
-         
+
+          <div className="badge badge-outline rounded-lg">
+            <FaHashtag />
+            {blog.category}
+          </div>
+
           <div>
             {data && (
               <div className="mt-5 mb-5 flex justify-between">
@@ -219,13 +219,20 @@ const handleRemoveFavorite = (blog) => {
               </div>
             )}
           </div>
-          <div className="card-actions justify-end">
+          <div className="card-actions gap-5 justify-end">
             <Link
               to={`/bloginfo/${blog.id}`}
               className="bg-blue-500 btn text-white px-4 py-2 rounded-md"
             >
               Read More
             </Link>
+            <button
+              onClick={() => document.getElementById("my_modal_5").showModal()}
+              className="bg-sky-500 btn text-white px-4 py-2 rounded-md"
+            >
+              Share
+            </button>
+            <ShareModal url={blogURL} />
           </div>
         </div>
       </div>

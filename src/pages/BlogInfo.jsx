@@ -7,7 +7,9 @@ import { GiSelfLove } from "react-icons/gi";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { FaHashtag } from "react-icons/fa";
-import AllBlogs from './AllBlogs';
+
+import ShareModal from "../components/ShareModal";
+import { MdOutlineShare } from "react-icons/md";
 
 const BlogInfo = () => {
   const id = useParams();
@@ -99,6 +101,8 @@ const BlogInfo = () => {
     }
   }, []);
 
+
+
   const handleRemoveFavorite = (AllBlogs) => {
     if (data && data.uid) {
       const favoriteRef = ref(fireDB, "favorites");
@@ -134,7 +138,9 @@ const BlogInfo = () => {
   };
 
 
-  // console.log(AllBlogs)
+
+  const currentURL = window.location.href;
+  const blogURL = `${currentURL}`;
 
   return (
     <>
@@ -206,6 +212,15 @@ const BlogInfo = () => {
                     )}
                   </div>
                 )}
+                <button
+                  onClick={() =>
+                    document.getElementById("my_modal_5").showModal()
+                  }
+                  className="flex items-center bg-sky-700   transition-all  hover:scale-110  px-4 py-2 rounded-full mr-2 mb-2 mt-5 sm:mb-0"
+                >
+                  <MdOutlineShare />
+                </button>
+                <ShareModal url={blogURL} />
               </div>
             </div>
           </div>

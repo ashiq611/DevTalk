@@ -155,6 +155,7 @@ import { useState } from 'react';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { fireDB, storage } from '../../firebase.confiq';
 import { useNavigate } from 'react-router-dom';
+
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { ref as dbref, set, push } from 'firebase/database';
@@ -232,6 +233,12 @@ const CreateBlog = () => {
      setText(content);
    };
 
+  
+
+    const goBack = () => {
+      navigate(-1);  // This function navigates back in the browser's history
+    };
+
   return (
     <>
       <Nav />
@@ -289,9 +296,16 @@ const CreateBlog = () => {
           /> */}
 
           {/* Submit Button */}
+          <div className='flex gap-2'>
+
           <button onClick={addPost} className="btn mt-8">
             Send
           </button>
+
+          <button className="btn mt-8" onClick={goBack}>
+            Back
+          </button>
+          </div>
 
           {/* Preview Section */}
           <div className="mt-8">
