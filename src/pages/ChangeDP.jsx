@@ -66,7 +66,7 @@ const ChangeDP = () => {
   return (
     <div>
       <dialog id="my_modal_11" className="modal">
-        <div className="modal-box bg-zinc-200">
+        <div className="modal-box">
           <h3 className="font-bold text-lg">Upload Your Profile Picture</h3>
           <div className="m-4">
             <input

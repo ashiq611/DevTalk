@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { userLoginInfo } from "../slices/userSlice";
+import SearchDialog from "./SearchDialog";
 
 
 
@@ -64,7 +65,10 @@ const Nav = () => {
         </div>
 
         <div className="navbar-end">
-          <button className="btn btn-ghost btn-circle">
+          <button
+            onClick={() => document.getElementById("my_modal_77").showModal()}
+            className="btn btn-ghost btn-circle"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -80,6 +84,8 @@ const Nav = () => {
               />
             </svg>
           </button>
+          <SearchDialog/>
+
           {!data && (
             <Link to="/login" className="btn">
               Login
