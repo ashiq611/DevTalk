@@ -1,3 +1,3 @@
 # DevTalk
 
-Live : https://comfy-pothos-c692c4.netlify.app/
+Live : https://devtalkapp.netlify.app/
